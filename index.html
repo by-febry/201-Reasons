@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>❤️</title>
+    <link rel="stylesheet" href="styles/main.css">
+<div class="wallpaper"></div>
+    <div class="content">
+    </div>
+    <h2 class="title">201 Reasons why I love you, Bella.</h2>
+</head>
+<body>
+    
+    <div class="message-history"></div>
+
+    <div class="bg_heart">
+        <div class="message"></div>
+        <a href="love.html" class="next-button">Click me</a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script/main.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let audio = document.getElementById("backgroundMusic");
+
+        // Try playing the audio on load
+        let playPromise = audio.play();
+        
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                console.log("Autoplay started successfully!");
+            }).catch(error => {
+                console.log("Autoplay blocked. Waiting for user interaction.");
+            });
+        }
+    });
+    function setupMusic() {
+        const music = document.getElementById('backgroundMusic');
+        
+        const isMusicPlaying = localStorage.getItem('musicPlaying') === 'true';
+        const musicCurrentTime = localStorage.getItem('musicCurrentTime') || 0;
+
+        if (isMusicPlaying) {
+            music.currentTime = parseFloat(musicCurrentTime);
+        }
+
+        music.addEventListener('play', () => {
+            localStorage.setItem('musicPlaying', 'true');
+        });
+
+        music.addEventListener('pause', () => {
+            localStorage.setItem('musicPlaying', 'false');
+        });
+
+        setInterval(() => {
+            localStorage.setItem('musicCurrentTime', music.currentTime);
+        }, 1000);
+
+        document.addEventListener('click', function startMusic() {
+            music.play().catch(error => {
+                console.log('Autoplay prevented', error);
+            });
+            document.removeEventListener('click', startMusic);
+        });
+    }
+
+        document.addEventListener('DOMContentLoaded', setupMusic);
+</script>
+
+<audio id="backgroundMusic" autoplay loop>
+    <source src="assets/sombr.mp3" type="audio/mpeg">
+</script>
+</body>
+</html>
